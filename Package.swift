@@ -21,8 +21,8 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(path: "../swift-kernel-primitives"),
-        .package(path: "../swift-posix"),
+        .package(url: "https://github.com/coenttb/swift-kernel-primitives.git", from: "0.1.0"),
+        .package(url: "https://github.com/coenttb/swift-posix.git", from: "0.1.0"),
         .package(url: "https://github.com/swift-standards/swift-standards.git", from: "0.29.0")
     ],
     targets: [
