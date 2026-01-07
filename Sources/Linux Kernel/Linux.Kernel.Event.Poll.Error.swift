@@ -31,7 +31,7 @@ public import Kernel_Primitives
         ///     case .interrupted:
         ///         // Retry the operation
         ///     default:
-        ///         throw Kernel.Error(error)
+        ///         print("epoll error: \(error)")
         ///     }
         /// }
         /// ```

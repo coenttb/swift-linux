@@ -31,7 +31,7 @@ public import Kernel_Primitives
         ///     case .interrupted:
         ///         // Retry the operation
         ///     default:
-        ///         throw Kernel.Error(error)  // Convert to semantic error
+        ///         print("io_uring error: \(error)")
         ///     }
         /// }
         /// ```
@@ -78,26 +78,6 @@ public import Kernel_Primitives
                 return "io_uring_register failed (\(code))"
             case .interrupted:
                 return "operation interrupted"
-            }
-        }
-    }
-
-    // MARK: - Kernel.Error Conversion
-
-    extension Kernel.Error {
-        /// Creates a semantic error from an io_uring error.
-        ///
-        /// Maps to semantic cases where possible, falls back to `.platform` otherwise.
-        public init(_ error: Kernel.IOUring.Error) {
-            switch error {
-            case .setup(let code):
-                self = Kernel.Error(code) ?? .platform(Kernel.Error.Unmapped.Error(code))
-            case .enter(let code):
-                self = Kernel.Error(code) ?? .platform(Kernel.Error.Unmapped.Error(code))
-            case .register(let code):
-                self = Kernel.Error(code) ?? .platform(Kernel.Error.Unmapped.Error(code))
-            case .interrupted:
-                self = .signal(.interrupted)
             }
         }
     }
