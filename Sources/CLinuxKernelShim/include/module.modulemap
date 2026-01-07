@@ -1,0 +1,4 @@
+module CLinuxKernelShim {
+    header "shim.h"
+    export *
+}

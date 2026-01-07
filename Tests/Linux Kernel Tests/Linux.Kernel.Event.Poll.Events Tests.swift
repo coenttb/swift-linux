@@ -1,0 +1,64 @@
+// ===----------------------------------------------------------------------===//
+//
+// This source file is part of the swift-kernel open source project
+//
+// Copyright (c) 2024-2025 Coen ten Thije Boonkkamp and the swift-kernel project authors
+// Licensed under Apache License v2.0
+//
+// See LICENSE for license information
+//
+// ===----------------------------------------------------------------------===//
+
+#if os(Linux)
+    #if canImport(Glibc)
+        import Glibc
+    #elseif canImport(Musl)
+        import Musl
+    #endif
+    import StandardsTestSupport
+    import Testing
+
+    import Kernel_Primitives
+@testable import Linux_Kernel
+    import Kernel_Primitives
+
+    extension Kernel.Event.Poll.Events {
+        #TestSuites
+    }
+
+    // MARK: - Bridging Unit Tests
+
+    extension Kernel.Event.Poll.Events.Test.Unit {
+
+        @Test("in and out events are distinct")
+        func inAndOutAreDistinct() {
+            #expect(Kernel.Event.Poll.Events.in != .out)
+            #expect(Kernel.Event.Poll.Events.in.rawValue != Kernel.Event.Poll.Events.out.rawValue)
+        }
+
+        @Test("events combine with OR operator")
+        func eventsCombineWithOrOperator() {
+            let combined = Kernel.Event.Poll.Events.in | .out
+            #expect(combined.contains(.in))
+            #expect(combined.contains(.out))
+            #expect(!combined.contains(.err))
+        }
+
+        @Test("contains detects single event")
+        func containsDetectsSingleEvent() {
+            #expect(Kernel.Event.Poll.Events.in.contains(.in))
+            #expect(!Kernel.Event.Poll.Events.in.contains(.out))
+        }
+
+        @Test("in event rawValue matches EPOLLIN")
+        func inRawValueMatchesEPOLLIN() {
+            #expect(Kernel.Event.Poll.Events.in.rawValue == EPOLLIN.rawValue)
+        }
+
+        @Test("out event rawValue matches EPOLLOUT")
+        func outRawValueMatchesEPOLLOUT() {
+            #expect(Kernel.Event.Poll.Events.out.rawValue == EPOLLOUT.rawValue)
+        }
+    }
+
+#endif
