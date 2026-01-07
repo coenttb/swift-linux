@@ -16,7 +16,6 @@
     import Kernel_Primitives
     @testable import Linux_Kernel
 
-
     extension Kernel.IOUring.Setup.Flags {
         #TestSuites
     }

@@ -21,7 +21,6 @@
     import Kernel_Primitives
     @testable import Linux_Kernel
 
-
     extension Kernel.Event.Poll.Operation {
         #TestSuites
     }
