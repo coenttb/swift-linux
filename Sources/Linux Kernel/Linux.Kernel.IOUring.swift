@@ -73,7 +73,6 @@ public import Kernel_Primitives
         ///   - flags: Enter flags.
         /// - Returns: Number of SQEs submitted.
         /// - Throws: `Error.enter` on failure, `Error.interrupted` on EINTR.
-        @inlinable
         public static func enter(
             _ fd: Kernel.Descriptor,
             toSubmit: UInt32,
@@ -104,7 +103,6 @@ public import Kernel_Primitives
         ///   - argument: Pointer to the arguments for the operation.
         ///   - count: Number of arguments.
         /// - Throws: `Error.register` on failure.
-        @inlinable
         public static func register(
             _ fd: Kernel.Descriptor,
             opcode: RegisterOpcode,
@@ -127,7 +125,6 @@ public import Kernel_Primitives
         /// Uses `Kernel.Close.close()` for consistency. Ignores errors.
         ///
         /// - Parameter fd: The io_uring file descriptor to close.
-        @inlinable
         public static func close(_ fd: Kernel.Descriptor) {
             try? Kernel.Close.close(fd)
         }

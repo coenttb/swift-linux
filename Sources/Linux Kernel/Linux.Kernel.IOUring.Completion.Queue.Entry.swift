@@ -42,11 +42,9 @@ public import Kernel_Primitives
         /// on the poll thread from the shared ring buffer.
         public struct Entry: Sendable {
             /// The underlying C struct.
-            @usableFromInline
             internal let cValue: io_uring_cqe
 
             /// Creates an Entry from a C struct.
-            @inlinable
             internal init(_ cValue: io_uring_cqe) {
                 self.cValue = cValue
             }
@@ -60,7 +58,6 @@ public import Kernel_Primitives
         ///
         /// This is the value set via `entry.data` when the operation was submitted.
         /// Typically used to recover the operation context (e.g., a pointer to Storage).
-        @inlinable
         public var data: Kernel.IOUring.Operation.Data {
             Kernel.IOUring.Operation.Data(cValue.user_data)
         }
@@ -69,7 +66,6 @@ public import Kernel_Primitives
         ///
         /// - For successful operations: the number of bytes transferred (or other success value)
         /// - For failed operations: a negative errno value
-        @inlinable
         public var res: Int32 {
             cValue.res
         }
@@ -77,7 +73,6 @@ public import Kernel_Primitives
         /// Entry flags.
         ///
         /// Contains additional information about the completion.
-        @inlinable
         public var flags: UInt32 {
             cValue.flags
         }
@@ -87,21 +82,17 @@ public import Kernel_Primitives
 
     extension Kernel.IOUring.Completion.Queue.Entry {
         /// Whether the operation completed successfully.
-        @inlinable
         public var isSuccess: Bool {
             res >= 0
         }
 
         /// Whether the operation failed.
-        @inlinable
         public var isError: Bool {
             res < 0
         }
 
         /// Whether the operation was cancelled.
         ///
-        /// Note: ECANCELED = 125 on Linux, hardcoded to avoid @inlinable visibility issues.
-        @inlinable
         public var isCancelled: Bool {
             res == -125  // ECANCELED
         }
@@ -109,7 +100,6 @@ public import Kernel_Primitives
         /// The error number (for failed operations).
         ///
         /// Returns nil if the operation succeeded.
-        @inlinable
         public var errorNumber: Kernel.Error.Number? {
             isError ? Kernel.Error.Number(-res) : nil
         }
@@ -123,10 +113,8 @@ public import Kernel_Primitives
 
         /// Byte-related properties for completion entry.
         public struct Bytes: Sendable {
-            @usableFromInline
             let entry: Kernel.IOUring.Completion.Queue.Entry
 
-            @usableFromInline
             init(entry: Kernel.IOUring.Completion.Queue.Entry) {
                 self.entry = entry
             }
@@ -134,7 +122,6 @@ public import Kernel_Primitives
             /// The number of bytes transferred (for read/write operations).
             ///
             /// Returns nil if the operation failed.
-            @inlinable
             public var transferred: Int? {
                 entry.isSuccess ? Int(entry.res) : nil
             }
@@ -149,10 +136,8 @@ public import Kernel_Primitives
 
         /// Buffer-related properties for completion entry.
         public struct Buffer: Sendable {
-            @usableFromInline
             let entry: Kernel.IOUring.Completion.Queue.Entry
 
-            @usableFromInline
             init(entry: Kernel.IOUring.Completion.Queue.Entry) {
                 self.entry = entry
             }
@@ -160,7 +145,6 @@ public import Kernel_Primitives
             /// The buffer ID if a buffer was selected.
             ///
             /// Only valid when `.buffer` flag is set.
-            @inlinable
             public var id: UInt16? {
                 guard Flags(rawValue: entry.flags).contains(.buffer) else { return nil }
                 return UInt16(truncatingIfNeeded: entry.flags >> 16)
@@ -176,23 +160,19 @@ public import Kernel_Primitives
 
         /// Typed accessor for flags.
         public struct Typed: Sendable {
-            @usableFromInline
             let entry: Kernel.IOUring.Completion.Queue.Entry
 
-            @usableFromInline
             init(entry: Kernel.IOUring.Completion.Queue.Entry) {
                 self.entry = entry
             }
 
             /// The entry flags as a typed value.
-            @inlinable
             public var flags: Flags {
                 Flags(rawValue: entry.flags)
             }
         }
 
         /// Whether this entry indicates more completions will follow (multishot).
-        @inlinable
         public var hasMore: Bool {
             typed.flags.contains(.more)
         }

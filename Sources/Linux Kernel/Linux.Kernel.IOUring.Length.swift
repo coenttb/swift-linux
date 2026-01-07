@@ -46,7 +46,6 @@ public import Kernel_Primitives
         /// Values larger than `UInt32.max` are clamped.
         ///
         /// - Parameter count: The length in bytes.
-        @inlinable
         public init(_ count: Int) {
             self.init(UInt32(clamping: count))
         }
@@ -54,7 +53,6 @@ public import Kernel_Primitives
         /// Creates a length from a buffer pointer.
         ///
         /// - Parameter buffer: The buffer whose count to use.
-        @inlinable
         public init(_ buffer: UnsafeRawBufferPointer) {
             self.init(UInt32(clamping: buffer.count))
         }
@@ -62,7 +60,6 @@ public import Kernel_Primitives
         /// Creates a length from a mutable buffer pointer.
         ///
         /// - Parameter buffer: The buffer whose count to use.
-        @inlinable
         public init(_ buffer: UnsafeMutableRawBufferPointer) {
             self.init(UInt32(clamping: buffer.count))
         }
@@ -74,7 +71,6 @@ public import Kernel_Primitives
         /// Creates a Length from a File.Size.
         ///
         /// Saturates at `UInt32.max` for sizes larger than 4GB.
-        @inlinable
         public init(_ size: Kernel.File.Size) {
             if size.rawValue > Int64(UInt32.max) {
                 self.init(UInt32.max)

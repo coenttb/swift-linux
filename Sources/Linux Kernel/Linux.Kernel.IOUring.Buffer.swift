@@ -43,13 +43,11 @@ public import Kernel_Primitives
             public let rawValue: UInt16
 
             /// Creates a buffer index from a raw value.
-            @inlinable
             public init(rawValue: UInt16) {
                 self.rawValue = rawValue
             }
 
             /// Creates a buffer index from a UInt16 value.
-            @inlinable
             public init(_ value: UInt16) {
                 self.rawValue = value
             }
@@ -64,7 +62,6 @@ public import Kernel_Primitives
     // MARK: - Buffer.Index + ExpressibleByIntegerLiteral
 
     extension Kernel.IOUring.Buffer.Index: ExpressibleByIntegerLiteral {
-        @inlinable
         public init(integerLiteral value: UInt16) {
             self.rawValue = value
         }
@@ -101,13 +98,11 @@ public import Kernel_Primitives
             public let rawValue: UInt16
 
             /// Creates a buffer group from a raw value.
-            @inlinable
             public init(rawValue: UInt16) {
                 self.rawValue = rawValue
             }
 
             /// Creates a buffer group from a UInt16 value.
-            @inlinable
             public init(_ value: UInt16) {
                 self.rawValue = value
             }
@@ -117,7 +112,6 @@ public import Kernel_Primitives
     // MARK: - Buffer.Group + ExpressibleByIntegerLiteral
 
     extension Kernel.IOUring.Buffer.Group: ExpressibleByIntegerLiteral {
-        @inlinable
         public init(integerLiteral value: UInt16) {
             self.rawValue = value
         }

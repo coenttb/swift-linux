@@ -42,7 +42,6 @@ public import Kernel_Primitives
         public struct Flags: Sendable, Equatable, Hashable {
             public let rawValue: Int32
 
-            @inlinable
             public init(rawValue: Int32) {
                 self.rawValue = rawValue
             }
@@ -62,7 +61,6 @@ public import Kernel_Primitives
         public static let cloexec = Self(rawValue: Int32(EPOLL_CLOEXEC))
 
         /// Combines multiple flags.
-        @inlinable
         public static func | (lhs: Self, rhs: Self) -> Self {
             Self(rawValue: lhs.rawValue | rhs.rawValue)
         }

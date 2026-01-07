@@ -40,7 +40,6 @@ public import Kernel_Primitives
         public struct Flags: OptionSet, Sendable {
             public let rawValue: UInt8
 
-            @inlinable
             public init(rawValue: UInt8) {
                 self.rawValue = rawValue
             }

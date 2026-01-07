@@ -41,7 +41,6 @@ public import Kernel_Primitives
         /// with an operation.
         ///
         /// - Parameter pointer: A pointer to associate with the operation.
-        @inlinable
         public init(_ pointer: UnsafeRawPointer) {
             self.init(UInt64(UInt(bitPattern: pointer)))
         }
@@ -49,7 +48,6 @@ public import Kernel_Primitives
         /// Creates operation data from a typed pointer.
         ///
         /// - Parameter pointer: A pointer to associate with the operation.
-        @inlinable
         public init<T>(pointer: UnsafePointer<T>) {
             self.init(UInt64(UInt(bitPattern: pointer)))
         }
@@ -57,7 +55,6 @@ public import Kernel_Primitives
         /// Creates operation data from a mutable typed pointer.
         ///
         /// - Parameter pointer: A mutable pointer to associate with the operation.
-        @inlinable
         public init<T>(pointer: UnsafeMutablePointer<T>) {
             self.init(UInt64(UInt(bitPattern: pointer)))
         }

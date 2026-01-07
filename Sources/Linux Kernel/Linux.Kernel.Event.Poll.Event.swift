@@ -70,7 +70,6 @@ public import Kernel_Primitives
             /// - Parameters:
             ///   - events: The event flags to monitor.
             ///   - data: Data to associate with the file descriptor.
-            @inlinable
             public init(events: Events, data: Kernel.Event.Poll.Data = .zero) {
                 self.events = events
                 self.data = data
@@ -82,14 +81,12 @@ public import Kernel_Primitives
 
     extension Kernel.Event.Poll.Event {
         /// Creates an epoll event from the C struct.
-        @usableFromInline
         internal init(_ cEvent: epoll_event) {
             self.events = Kernel.Event.Poll.Events(rawValue: cEvent.events)
             self.data = Kernel.Event.Poll.Data(cEvent.data.u64)
         }
 
         /// Converts to the C epoll_event struct.
-        @usableFromInline
         internal var cValue: epoll_event {
             var event = epoll_event()
             event.events = events.rawValue

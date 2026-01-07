@@ -45,7 +45,6 @@ public import Kernel_Primitives
         public struct RegisterOpcode: RawRepresentable, Sendable, Equatable, Hashable {
             public let rawValue: UInt32
 
-            @inlinable
             public init(rawValue: UInt32) {
                 self.rawValue = rawValue
             }

@@ -30,7 +30,6 @@ public import Kernel_Primitives
             public let dropped: UInt32
             public let array: UInt32
 
-            @usableFromInline
             internal init() {
                 self.head = 0
                 self.tail = 0

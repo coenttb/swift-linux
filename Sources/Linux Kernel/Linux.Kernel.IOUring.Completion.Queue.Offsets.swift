@@ -30,7 +30,6 @@ public import Kernel_Primitives
             public let cqes: UInt32
             public let flags: UInt32
 
-            @usableFromInline
             internal init() {
                 self.head = 0
                 self.tail = 0

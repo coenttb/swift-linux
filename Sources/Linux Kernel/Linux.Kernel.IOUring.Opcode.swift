@@ -45,7 +45,6 @@ public import Kernel_Primitives
         public struct Opcode: RawRepresentable, Sendable, Equatable, Hashable {
             public let rawValue: UInt8
 
-            @inlinable
             public init(rawValue: UInt8) {
                 self.rawValue = rawValue
             }

@@ -41,17 +41,14 @@ public import Kernel_Primitives
         /// on the poll thread and written to the shared ring buffer.
         public struct Entry: Sendable {
             /// The underlying C struct.
-            @usableFromInline
             internal var cValue: io_uring_sqe
 
             /// Creates an empty Entry (zeroed).
-            @inlinable
             public init() {
                 self.cValue = io_uring_sqe()
             }
 
             /// Creates an Entry from a C struct.
-            @inlinable
             internal init(_ cValue: io_uring_sqe) {
                 self.cValue = cValue
             }
@@ -62,70 +59,60 @@ public import Kernel_Primitives
 
     extension Kernel.IOUring.Submission.Queue.Entry {
         /// The operation code.
-        @inlinable
         public var opcode: Kernel.IOUring.Opcode {
             get { Kernel.IOUring.Opcode(rawValue: cValue.opcode) }
             set { cValue.opcode = newValue.rawValue }
         }
 
         /// Entry flags.
-        @inlinable
         public var flags: UInt8 {
             get { cValue.flags }
             set { cValue.flags = newValue }
         }
 
         /// Operation-specific flags (rw_flags field).
-        @inlinable
         public var opFlags: Int32 {
             get { cValue.rw_flags }
             set { cValue.rw_flags = newValue }
         }
 
         /// I/O priority.
-        @inlinable
         public var priority: Kernel.IOUring.Priority {
             get { Kernel.IOUring.Priority(rawValue: cValue.ioprio) }
             set { cValue.ioprio = newValue.rawValue }
         }
 
         /// File descriptor for the operation.
-        @inlinable
         public var fd: Kernel.Descriptor {
             get { Kernel.Descriptor(rawValue: cValue.fd) }
             set { cValue.fd = newValue.rawValue }
         }
 
         /// File offset for read/write operations.
-        @inlinable
         public var offset: Kernel.IOUring.Offset {
             get { Kernel.IOUring.Offset(cValue.off) }
             set { cValue.off = newValue.rawValue }
         }
 
         /// Buffer address or other address field.
-        @inlinable
         public var addr: UInt64 {
             get { cValue.addr }
             set { cValue.addr = newValue }
         }
 
         /// Buffer length.
-        @inlinable
         public var len: Kernel.IOUring.Length {
             get { Kernel.IOUring.Length(cValue.len) }
             set { cValue.len = newValue.rawValue }
         }
 
         /// Operation data returned with completion.
-        @inlinable
         public var data: Kernel.IOUring.Operation.Data {
             get { Kernel.IOUring.Operation.Data(cValue.user_data) }
             set { cValue.user_data = newValue.rawValue }
         }
 
         /// Personality ID (for credentials).
-        @inlinable
         public var personality: Kernel.IOUring.Personality.ID {
             get { Kernel.IOUring.Personality.ID(cValue.personality) }
             set { cValue.personality = newValue.rawValue }
@@ -148,7 +135,6 @@ public import Kernel_Primitives
             /// Note: Uses Int32 to match Linux kernel's `__kernel_rwf_t` type.
             public var flags: Int32
 
-            @usableFromInline
             init(entry: Kernel.IOUring.Submission.Queue.Entry) {
                 self.flags = entry.cValue.rw_flags
             }
@@ -180,7 +166,6 @@ public import Kernel_Primitives
             /// Buffer group (for buffer selection).
             public var group: Kernel.IOUring.Buffer.Group
 
-            @usableFromInline
             init(entry: Kernel.IOUring.Submission.Queue.Entry) {
                 self.index = Kernel.IOUring.Buffer.Index(rawValue: entry.cValue.buf_index)
                 self.group = Kernel.IOUring.Buffer.Group(rawValue: entry.cValue.buf_group)

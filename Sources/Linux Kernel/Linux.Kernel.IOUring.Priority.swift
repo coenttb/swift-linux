@@ -32,13 +32,11 @@ public import Kernel_Primitives
             public let rawValue: UInt16
 
             /// Creates a priority from a raw value.
-            @inlinable
             public init(rawValue: UInt16) {
                 self.rawValue = rawValue
             }
 
             /// Creates a priority from a UInt16 value.
-            @inlinable
             public init(_ value: UInt16) {
                 self.rawValue = value
             }
@@ -53,7 +51,6 @@ public import Kernel_Primitives
 
             // MARK: - Comparable
 
-            @inlinable
             public static func < (lhs: Priority, rhs: Priority) -> Bool {
                 lhs.rawValue < rhs.rawValue
             }
@@ -63,7 +60,6 @@ public import Kernel_Primitives
     // MARK: - ExpressibleByIntegerLiteral
 
     extension Kernel.IOUring.Priority: ExpressibleByIntegerLiteral {
-        @inlinable
         public init(integerLiteral value: UInt16) {
             self.rawValue = value
         }

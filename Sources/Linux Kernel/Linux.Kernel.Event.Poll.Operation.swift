@@ -61,7 +61,6 @@ public import Kernel_Primitives
         public struct Operation: RawRepresentable, Sendable, Equatable, Hashable {
             public let rawValue: Int32
 
-            @inlinable
             public init(rawValue: Int32) {
                 self.rawValue = rawValue
             }

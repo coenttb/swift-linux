@@ -24,7 +24,6 @@ public import Kernel_Primitives
         public struct Prepare {
             public var entry: Kernel.IOUring.Submission.Queue.Entry
 
-            @inlinable
             init(entry: Kernel.IOUring.Submission.Queue.Entry) {
                 self.entry = entry
             }
@@ -32,7 +31,6 @@ public import Kernel_Primitives
             /// Configures this entry for a no-op operation.
             ///
             /// - Parameter data: Operation data to return with completion.
-            @inlinable
             public mutating func nop(data: Kernel.IOUring.Operation.Data) {
                 entry.cValue = io_uring_sqe()
                 entry.opcode = .nop
@@ -47,7 +45,6 @@ public import Kernel_Primitives
             ///   - length: Number of bytes to read.
             ///   - offset: File offset (use `.current` for current position).
             ///   - data: Operation data to return with completion.
-            @inlinable
             public mutating func read(
                 fd: Kernel.Descriptor,
                 buffer: UnsafeMutableRawPointer,
@@ -72,7 +69,6 @@ public import Kernel_Primitives
             ///   - length: Number of bytes to write.
             ///   - offset: File offset (use `.current` for current position).
             ///   - data: Operation data to return with completion.
-            @inlinable
             public mutating func write(
                 fd: Kernel.Descriptor,
                 buffer: UnsafeRawPointer,
@@ -94,7 +90,6 @@ public import Kernel_Primitives
             /// - Parameters:
             ///   - target: Operation data of the operation to cancel.
             ///   - data: Operation data to return with this cancel's completion.
-            @inlinable
             public mutating func cancel(
                 target: Kernel.IOUring.Operation.Data,
                 data: Kernel.IOUring.Operation.Data
@@ -111,7 +106,6 @@ public import Kernel_Primitives
             ///   - fd: File descriptor to sync.
             ///   - datasync: If true, only sync data (not metadata).
             ///   - data: Operation data to return with completion.
-            @inlinable
             public mutating func fsync(
                 fd: Kernel.Descriptor,
                 datasync: Bool,
@@ -131,7 +125,6 @@ public import Kernel_Primitives
             /// - Parameters:
             ///   - fd: File descriptor to close.
             ///   - data: Operation data to return with completion.
-            @inlinable
             public mutating func close(
                 fd: Kernel.Descriptor,
                 data: Kernel.IOUring.Operation.Data
@@ -150,7 +143,6 @@ public import Kernel_Primitives
             ///   - addrLen: Optional pointer to sockaddr length.
             ///   - flags: Accept flags.
             ///   - data: Operation data to return with completion.
-            @inlinable
             public mutating func accept(
                 fd: Kernel.Descriptor,
                 addr: UnsafeMutableRawPointer?,
@@ -174,7 +166,6 @@ public import Kernel_Primitives
             ///   - addr: Pointer to sockaddr.
             ///   - addrLen: Length of sockaddr.
             ///   - data: Operation data to return with completion.
-            @inlinable
             public mutating func connect(
                 fd: Kernel.Descriptor,
                 addr: UnsafeRawPointer,
@@ -197,7 +188,6 @@ public import Kernel_Primitives
             ///   - length: Number of bytes to send.
             ///   - flags: Send flags.
             ///   - data: Operation data to return with completion.
-            @inlinable
             public mutating func send(
                 fd: Kernel.Descriptor,
                 buffer: UnsafeRawPointer,
@@ -222,7 +212,6 @@ public import Kernel_Primitives
             ///   - length: Maximum bytes to receive.
             ///   - flags: Recv flags.
             ///   - data: Operation data to return with completion.
-            @inlinable
             public mutating func recv(
                 fd: Kernel.Descriptor,
                 buffer: UnsafeMutableRawPointer,
@@ -252,7 +241,6 @@ public import Kernel_Primitives
         /// var entry = Kernel.IOUring.Submission.Queue.Entry()
         /// entry.prepare.read(fd: fd, buffer: buffer, length: len, offset: 0, data: id)
         /// ```
-        @inlinable
         public var prepare: Prepare {
             get { Prepare(entry: self) }
             set { self = newValue.entry }

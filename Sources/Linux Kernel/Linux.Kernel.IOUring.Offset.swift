@@ -52,7 +52,6 @@ public import Kernel_Primitives
         ///
         /// Negative file offsets (indicating "current position") are
         /// converted to `.current` (UInt64.max).
-        @inlinable
         public init(_ fileOffset: Kernel.File.Offset) {
             if fileOffset.rawValue >= 0 {
                 self.init(UInt64(fileOffset.rawValue))

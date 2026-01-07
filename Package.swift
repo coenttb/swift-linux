@@ -47,7 +47,7 @@ let package = Package(
             name: "Linux Kernel Tests",
             dependencies: [
                 "Linux Kernel",
-                .product(name: "Kernel Test Support", package: "swift-kernel-primitives"),
+                .product(name: "Kernel Primitives Test Support", package: "swift-kernel-primitives"),
                 .product(name: "StandardsTestSupport", package: "swift-standards")
             ],
             path: "Tests/Linux Kernel Tests"
