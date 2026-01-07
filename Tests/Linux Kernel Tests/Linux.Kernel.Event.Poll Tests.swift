@@ -19,8 +19,8 @@
     import Testing
 
     import Kernel_Primitives
-@testable import Linux_Kernel
-    import Kernel_Primitives
+    @testable import Linux_Kernel
+
     import Kernel_Primitives_Test_Support
 
     extension Kernel.Event.Poll {

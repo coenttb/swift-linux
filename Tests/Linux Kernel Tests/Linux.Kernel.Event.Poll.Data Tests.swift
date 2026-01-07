@@ -20,8 +20,8 @@
     import Testing
 
     import Kernel_Primitives
-@testable import Linux_Kernel
-    import Kernel_Primitives
+    @testable import Linux_Kernel
+
 
     // Kernel.Event.Poll.Data is a typealias to Tagged<Kernel.Event.Poll, UInt64>
     // The #TestSuites macro cannot be used directly on typealiases

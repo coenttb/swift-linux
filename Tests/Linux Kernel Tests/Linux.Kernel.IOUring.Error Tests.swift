@@ -14,8 +14,8 @@
     import Testing
 
     import Kernel_Primitives
-@testable import Linux_Kernel
-    import Kernel_Primitives
+    @testable import Linux_Kernel
+
 
     extension Kernel.IOUring.Error {
         #TestSuites
