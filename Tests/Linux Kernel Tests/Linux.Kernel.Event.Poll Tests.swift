@@ -21,7 +21,7 @@
     import Kernel_Primitives
 @testable import Linux_Kernel
     import Kernel_Primitives
-    import Kernel_Test_Support
+    import Kernel_Primitives_Test_Support
 
     extension Kernel.Event.Poll {
         #TestSuites
