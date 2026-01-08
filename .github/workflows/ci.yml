@@ -29,25 +29,6 @@ jobs:
           key: linux-swift62-spm-v4-${{ hashFiles('Package.swift', 'Package@*.swift') }}
           restore-keys: linux-swift62-spm-
 
-      - name: Build (release)
-        run: swift build -c release
-
-  # Compatibility check: Minimum supported Swift version (6.2)
-  # Update to swift:6.3 when available
-  linux-compat:
-    name: Ubuntu (Swift 6.2, compatibility)
-    runs-on: ubuntu-latest
-    container: swift:6.2
-    steps:
-      - uses: actions/checkout@v6
-
-      - name: Cache Swift packages
-        uses: actions/cache@v5
-        with:
-          path: .build
-          key: linux-swift62-compat-spm-v4-${{ hashFiles('Package.swift', 'Package@*.swift') }}
-          restore-keys: linux-swift62-compat-spm-
-
-      - name: Build (Swift 6.2)
-        run: swift build -c release
+      - name: Test (release)
+        run: swift test -c release
 
