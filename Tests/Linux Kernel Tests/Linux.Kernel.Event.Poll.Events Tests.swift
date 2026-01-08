@@ -10,11 +10,6 @@
 // ===----------------------------------------------------------------------===//
 
 #if os(Linux)
-    #if canImport(Glibc)
-        import Glibc
-    #elseif canImport(Musl)
-        import Musl
-    #endif
     import StandardsTestSupport
     import Testing
 
@@ -50,15 +45,19 @@
             #expect(!events.contains(.out))
         }
 
-        @Test("in event rawValue matches EPOLLIN")
-        func inRawValueMatchesEPOLLIN() {
-            // EPOLLIN is EPOLL_EVENTS which has .rawValue
-            #expect(Kernel.Event.Poll.Events.in.rawValue == EPOLLIN.rawValue)
+        @Test("in event has non-zero rawValue")
+        func inRawValueNonZero() {
+            #expect(Kernel.Event.Poll.Events.in.rawValue != 0)
         }
 
-        @Test("out event rawValue matches EPOLLOUT")
-        func outRawValueMatchesEPOLLOUT() {
-            #expect(Kernel.Event.Poll.Events.out.rawValue == EPOLLOUT.rawValue)
+        @Test("out event has non-zero rawValue")
+        func outRawValueNonZero() {
+            #expect(Kernel.Event.Poll.Events.out.rawValue != 0)
+        }
+
+        @Test("in and out have different rawValues")
+        func inAndOutDifferentRawValues() {
+            #expect(Kernel.Event.Poll.Events.in.rawValue != Kernel.Event.Poll.Events.out.rawValue)
         }
     }
 

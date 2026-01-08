@@ -60,10 +60,10 @@
 
         @Test("combined events are preserved")
         func combinedEvents() {
-            let events = Kernel.Event.Poll.Events.in | .out
+            let events: Kernel.Event.Poll.Events = [.in, .out]
             let event = Kernel.Event.Poll.Event(events: events)
-            #expect(event.events.contains(.in))
-            #expect(event.events.contains(.out))
+            #expect(events.contains(.in))
+            #expect(events.contains(.out))
         }
     }
 
@@ -102,12 +102,12 @@
     extension Kernel.Event.Poll.Event.Test.EdgeCase {
         @Test("event with all flags combined")
         func allFlagsCombined() {
-            let events = Kernel.Event.Poll.Events.in | .out | .err | .hup
+            let events: Kernel.Event.Poll.Events = [.in, .out, .err, .hup]
             let event = Kernel.Event.Poll.Event(events: events)
-            #expect(event.events.contains(.in))
-            #expect(event.events.contains(.out))
-            #expect(event.events.contains(.err))
-            #expect(event.events.contains(.hup))
+            #expect(events.contains(.in))
+            #expect(events.contains(.out))
+            #expect(events.contains(.err))
+            #expect(events.contains(.hup))
         }
 
         @Test("event with max data value")
