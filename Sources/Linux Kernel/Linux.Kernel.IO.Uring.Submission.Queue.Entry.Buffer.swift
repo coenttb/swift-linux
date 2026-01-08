@@ -12,6 +12,13 @@ public import Kernel_Primitives
 
 #if canImport(Glibc) || canImport(Musl)
 
+    #if canImport(Glibc)
+        public import Glibc
+        public import CLinuxShim
+    #elseif canImport(Musl)
+        public import Musl
+    #endif
+
     extension Kernel.IO.Uring.Submission.Queue.Entry {
         /// Accessor for buffer-related properties.
         public var buffer: Buffer {
