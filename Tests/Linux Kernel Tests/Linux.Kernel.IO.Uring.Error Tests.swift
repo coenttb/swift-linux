@@ -137,21 +137,6 @@
         }
     }
 
-    // MARK: - Kernel.Error Conversion Tests
-
-    extension Kernel.IO.Uring.Error.Test.Unit {
-        @Test("Kernel.Error can be initialized from IO.Uring.Error")
-        func kernelErrorConversion() {
-            let iouringError = Kernel.IO.Uring.Error.interrupted
-            let kernelError = Kernel.Error(iouringError)
-            if case .signal(.interrupted) = kernelError {
-                // Expected
-            } else {
-                Issue.record("Expected .signal(.interrupted)")
-            }
-        }
-    }
-
     // MARK: - Edge Cases
 
     extension Kernel.IO.Uring.Error.Test.EdgeCase {

@@ -12,6 +12,7 @@
 #if os(Linux)
     #if canImport(Glibc)
         import Glibc
+        import CLinuxShim
     #elseif canImport(Musl)
         import Musl
     #endif
