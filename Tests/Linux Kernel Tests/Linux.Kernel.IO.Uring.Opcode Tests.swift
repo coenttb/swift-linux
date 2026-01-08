@@ -34,24 +34,24 @@
             #expect(Kernel.IO.Uring.Opcode.nop.rawValue == 0)
         }
 
-        @Test("readv has rawValue 1")
-        func readvRawValue() {
-            #expect(Kernel.IO.Uring.Opcode.readv.rawValue == 1)
+        @Test("read.vectored has rawValue 1")
+        func readVectoredRawValue() {
+            #expect(Kernel.IO.Uring.Read.vectored.rawValue == 1)
         }
 
-        @Test("writev has rawValue 2")
-        func writevRawValue() {
-            #expect(Kernel.IO.Uring.Opcode.writev.rawValue == 2)
+        @Test("write.vectored has rawValue 2")
+        func writeVectoredRawValue() {
+            #expect(Kernel.IO.Uring.Write.vectored.rawValue == 2)
         }
 
-        @Test("read has rawValue 22")
-        func readRawValue() {
-            #expect(Kernel.IO.Uring.Opcode.read.rawValue == 22)
+        @Test("read.standard has rawValue 22")
+        func readStandardRawValue() {
+            #expect(Kernel.IO.Uring.Read.standard.rawValue == 22)
         }
 
-        @Test("write has rawValue 23")
-        func writeRawValue() {
-            #expect(Kernel.IO.Uring.Opcode.write.rawValue == 23)
+        @Test("write.standard has rawValue 23")
+        func writeStandardRawValue() {
+            #expect(Kernel.IO.Uring.Write.standard.rawValue == 23)
         }
 
         @Test("close has rawValue 19")
@@ -59,14 +59,14 @@
             #expect(Kernel.IO.Uring.Opcode.close.rawValue == 19)
         }
 
-        @Test("accept has rawValue 13")
-        func acceptRawValue() {
-            #expect(Kernel.IO.Uring.Opcode.accept.rawValue == 13)
+        @Test("socket.accept has rawValue 13")
+        func socketAcceptRawValue() {
+            #expect(Kernel.IO.Uring.Opcode.socket.accept.rawValue == 13)
         }
 
-        @Test("connect has rawValue 16")
-        func connectRawValue() {
-            #expect(Kernel.IO.Uring.Opcode.connect.rawValue == 16)
+        @Test("socket.connect has rawValue 16")
+        func socketConnectRawValue() {
+            #expect(Kernel.IO.Uring.Opcode.socket.connect.rawValue == 16)
         }
     }
 
@@ -81,9 +81,9 @@
 
         @Test("Opcode is Equatable")
         func isEquatable() {
-            let a = Kernel.IO.Uring.Opcode.read
-            let b = Kernel.IO.Uring.Opcode.read
-            let c = Kernel.IO.Uring.Opcode.write
+            let a = Kernel.IO.Uring.Read.standard
+            let b = Kernel.IO.Uring.Read.standard
+            let c = Kernel.IO.Uring.Write.standard
             #expect(a == b)
             #expect(a != c)
         }
@@ -92,8 +92,8 @@
         func isHashable() {
             var set = Set<Kernel.IO.Uring.Opcode>()
             set.insert(.nop)
-            set.insert(.read)
-            set.insert(.write)
+            set.insert(Kernel.IO.Uring.Read.standard)
+            set.insert(Kernel.IO.Uring.Write.standard)
             set.insert(.nop)  // duplicate
             #expect(set.count == 3)
         }
@@ -106,7 +106,7 @@
 
         @Test("Opcode is CustomStringConvertible")
         func isCustomStringConvertible() {
-            let opcode: any CustomStringConvertible = Kernel.IO.Uring.Opcode.read
+            let opcode: any CustomStringConvertible = Kernel.IO.Uring.Read.standard
             #expect(opcode.description == "READ")
         }
     }
@@ -119,14 +119,14 @@
             #expect(Kernel.IO.Uring.Opcode.nop.description == "NOP")
         }
 
-        @Test("read description")
+        @Test("read.standard description")
         func readDescription() {
-            #expect(Kernel.IO.Uring.Opcode.read.description == "READ")
+            #expect(Kernel.IO.Uring.Read.standard.description == "READ")
         }
 
-        @Test("write description")
+        @Test("write.standard description")
         func writeDescription() {
-            #expect(Kernel.IO.Uring.Opcode.write.description == "WRITE")
+            #expect(Kernel.IO.Uring.Write.standard.description == "WRITE")
         }
 
         @Test("unknown opcode description")
@@ -143,15 +143,24 @@
         @Test("opcodes with same rawValue are equal")
         func sameRawValueEqual() {
             let a = Kernel.IO.Uring.Opcode(rawValue: 22)
-            let b = Kernel.IO.Uring.Opcode.read
+            let b = Kernel.IO.Uring.Read.standard
             #expect(a == b)
         }
 
         @Test("opcodes are distinct")
         func opcodesDistinct() {
             let opcodes: [Kernel.IO.Uring.Opcode] = [
-                .nop, .readv, .writev, .fsync, .read, .write,
-                .accept, .connect, .send, .recv, .close,
+                .nop,
+                Kernel.IO.Uring.Read.vectored,
+                Kernel.IO.Uring.Write.vectored,
+                Kernel.IO.Uring.Sync.file,
+                Kernel.IO.Uring.Read.standard,
+                Kernel.IO.Uring.Write.standard,
+                Kernel.IO.Uring.Socket.accept,
+                Kernel.IO.Uring.Socket.connect,
+                Kernel.IO.Uring.Socket.send,
+                Kernel.IO.Uring.Socket.receive,
+                .close,
             ]
 
             for i in 0..<opcodes.count {

@@ -25,13 +25,13 @@ public import Kernel_Primitives
             public static let send = Opcode(rawValue: 26)
 
             /// Receive data from socket.
-            public static let recv = Opcode(rawValue: 27)
+            public static let receive = Opcode(rawValue: 27)
 
             /// Send message on socket.
-            public static let sendmsg = Opcode(rawValue: 9)
+            public static let sendMessage = Opcode(rawValue: 9)
 
             /// Receive message from socket.
-            public static let recvmsg = Opcode(rawValue: 10)
+            public static let receiveMessage = Opcode(rawValue: 10)
 
             /// Shutdown socket.
             public static let shutdown = Opcode(rawValue: 34)

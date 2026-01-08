@@ -75,7 +75,7 @@ public import Kernel_Primitives
             case .socket.accept: return "ACCEPT"
             case .socket.connect: return "CONNECT"
             case .socket.send: return "SEND"
-            case .socket.recv: return "RECV"
+            case .socket.receive: return "RECV"
             case .close: return "CLOSE"
             case .cancel.async: return "ASYNC_CANCEL"
             default: return "OPCODE(\(rawValue))"

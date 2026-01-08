@@ -53,7 +53,7 @@ public import Kernel_Primitives
                 data: Kernel.IO.Uring.Operation.Data
             ) {
                 entry.cValue = io_uring_sqe()
-                entry.opcode = .read
+                entry.opcode = .read.standard
                 entry.fd = fd
                 entry.addr = UInt64(UInt(bitPattern: buffer))
                 entry.len = length
@@ -77,7 +77,7 @@ public import Kernel_Primitives
                 data: Kernel.IO.Uring.Operation.Data
             ) {
                 entry.cValue = io_uring_sqe()
-                entry.opcode = .write
+                entry.opcode = .write.standard
                 entry.fd = fd
                 entry.addr = UInt64(UInt(bitPattern: buffer))
                 entry.len = length
@@ -95,7 +95,7 @@ public import Kernel_Primitives
                 data: Kernel.IO.Uring.Operation.Data
             ) {
                 entry.cValue = io_uring_sqe()
-                entry.opcode = .asyncCancel
+                entry.opcode = .cancel.async
                 entry.addr = target.rawValue
                 entry.data = data
             }
@@ -112,7 +112,7 @@ public import Kernel_Primitives
                 data: Kernel.IO.Uring.Operation.Data
             ) {
                 entry.cValue = io_uring_sqe()
-                entry.opcode = .fsync
+                entry.opcode = .sync.file
                 entry.fd = fd
                 if datasync {
                     entry.opFlags = 1  // IORING_FSYNC_DATASYNC
@@ -151,7 +151,7 @@ public import Kernel_Primitives
                 data: Kernel.IO.Uring.Operation.Data
             ) {
                 entry.cValue = io_uring_sqe()
-                entry.opcode = .accept
+                entry.opcode = .socket.accept
                 entry.fd = fd
                 entry.addr = UInt64(UInt(bitPattern: addr))
                 entry.offset = Kernel.IO.Uring.Offset(rawValue: UInt64(UInt(bitPattern: addrLen)))
@@ -173,7 +173,7 @@ public import Kernel_Primitives
                 data: Kernel.IO.Uring.Operation.Data
             ) {
                 entry.cValue = io_uring_sqe()
-                entry.opcode = .connect
+                entry.opcode = .socket.connect
                 entry.fd = fd
                 entry.addr = UInt64(UInt(bitPattern: addr))
                 entry.offset = Kernel.IO.Uring.Offset(rawValue: UInt64(addrLen))
@@ -196,7 +196,7 @@ public import Kernel_Primitives
                 data: Kernel.IO.Uring.Operation.Data
             ) {
                 entry.cValue = io_uring_sqe()
-                entry.opcode = .send
+                entry.opcode = .socket.send
                 entry.fd = fd
                 entry.addr = UInt64(UInt(bitPattern: buffer))
                 entry.len = length
@@ -220,7 +220,7 @@ public import Kernel_Primitives
                 data: Kernel.IO.Uring.Operation.Data
             ) {
                 entry.cValue = io_uring_sqe()
-                entry.opcode = .recv
+                entry.opcode = .socket.receive
                 entry.fd = fd
                 entry.addr = UInt64(UInt(bitPattern: buffer))
                 entry.len = length
