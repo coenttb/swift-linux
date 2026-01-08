@@ -46,12 +46,6 @@
                     #expect(length.rawValue == 8192)
                 }
 
-                @Test("Length description")
-                func description() {
-                    let length = Kernel.IO.Uring.Length(4096)
-                    #expect(length.description == "4096")
-                }
-
                 @Test("Length is Sendable")
                 func isSendable() {
                     let length: any Sendable = Kernel.IO.Uring.Length(1024)

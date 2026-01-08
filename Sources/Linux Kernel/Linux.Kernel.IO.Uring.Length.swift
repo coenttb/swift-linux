@@ -82,12 +82,4 @@ public import Kernel_Primitives
         }
     }
 
-    // MARK: - CustomStringConvertible
-
-    extension Kernel.IO.Uring.Length: CustomStringConvertible {
-        public var description: String {
-            "\(rawValue)"
-        }
-    }
-
 #endif
