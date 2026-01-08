@@ -1,4 +1,3 @@
-public import Dimension
 // ===----------------------------------------------------------------------===//
 //
 // This source file is part of the swift-kernel open source project
@@ -9,9 +8,11 @@ public import Dimension
 // See LICENSE for license information
 //
 // ===----------------------------------------------------------------------===//
-public import Kernel_Primitives
 
 #if canImport(Glibc) || canImport(Musl)
+
+    public import Kernel_Primitives
+    public import Dimension
 
     extension Kernel.Event.Poll {
         /// Opaque data associated with an epoll event.

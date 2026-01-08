@@ -1,4 +1,3 @@
-public import Dimension
 // ===----------------------------------------------------------------------===//
 //
 // This source file is part of the swift-kernel open source project
@@ -9,9 +8,10 @@ public import Dimension
 // See LICENSE for license information
 //
 // ===----------------------------------------------------------------------===//
-public import Kernel_Primitives
 
 #if canImport(Glibc) || canImport(Musl)
+    public import Dimension
+    public import Kernel_Primitives
 
     extension Kernel.IO.Uring.Operation {
         /// Opaque data associated with an io_uring operation.

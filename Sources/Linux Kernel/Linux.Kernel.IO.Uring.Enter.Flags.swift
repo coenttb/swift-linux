@@ -8,9 +8,9 @@
 // See LICENSE for license information
 //
 // ===----------------------------------------------------------------------===//
-public import Kernel_Primitives
 
 #if canImport(Glibc) || canImport(Musl)
+    public import Kernel_Primitives
 
     extension Kernel.IO.Uring.Enter {
         /// Flags controlling `io_uring_enter` behavior.

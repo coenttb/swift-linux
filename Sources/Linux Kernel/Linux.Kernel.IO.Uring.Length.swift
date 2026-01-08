@@ -9,10 +9,9 @@
 //
 // ===----------------------------------------------------------------------===//
 
-public import Binary
-public import Kernel_Primitives
-
 #if canImport(Glibc) || canImport(Musl)
+    public import Binary
+    public import Kernel_Primitives
 
     extension Kernel.IO.Uring {
         /// Buffer length for io_uring operations.

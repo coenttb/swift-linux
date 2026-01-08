@@ -11,7 +11,7 @@
 
 public import Kernel_Primitives
 public import Linux_Primitives
-public import POSIX_Kernel
+import POSIX_Kernel
 
 /// Re-export Kernel namespace from primitives for use within Linux module.
 public typealias Kernel = Kernel_Primitives.Kernel
