@@ -34,7 +34,7 @@ let package = Package(
                 .target(name: "Linux Primitives"),
                 .product(name: "Kernel Primitives", package: "swift-kernel-primitives"),
                 .product(name: "POSIX Kernel", package: "swift-posix"),
-                .target(name: "CLinuxKernelShim"),
+                .target(name: "CLinuxKernelShim", condition: .when(platforms: [.linux])),
             ]
         ),
         .testTarget(
