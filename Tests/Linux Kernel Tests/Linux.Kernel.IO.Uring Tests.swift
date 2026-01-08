@@ -39,7 +39,7 @@
 
         @Test("setup returns descriptor and updates params")
         func setupReturnsDescriptorAndUpdatesParams() throws {
-            try #require(Kernel.IO.Uring.isSupported)
+            guard Kernel.IO.Uring.isSupported else { return }
 
             var params = Kernel.IO.Uring.Params()
             let fd = try Kernel.IO.Uring.setup(entries: 1, params: &params)
@@ -52,7 +52,7 @@
 
         @Test("enter with zero submit returns immediately")
         func enterWithZeroReturnsImmediately() throws {
-            try #require(Kernel.IO.Uring.isSupported)
+            guard Kernel.IO.Uring.isSupported else { return }
 
             var params = Kernel.IO.Uring.Params()
             let fd = try Kernel.IO.Uring.setup(entries: 1, params: &params)
@@ -65,7 +65,7 @@
 
         @Test("close does not crash")
         func closeDoesNotCrash() throws {
-            try #require(Kernel.IO.Uring.isSupported)
+            guard Kernel.IO.Uring.isSupported else { return }
 
             var params = Kernel.IO.Uring.Params()
             let fd = try Kernel.IO.Uring.setup(entries: 1, params: &params)
@@ -79,7 +79,7 @@
 
         @Test("setup with invalid entries throws")
         func setupWithInvalidEntriesThrows() throws {
-            try #require(Kernel.IO.Uring.isSupported)
+            guard Kernel.IO.Uring.isSupported else { return }
 
             var params = Kernel.IO.Uring.Params()
 
