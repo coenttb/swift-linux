@@ -13,10 +13,13 @@ public import Kernel_Primitives
 #if canImport(Glibc) || canImport(Musl)
 
     #if canImport(Glibc)
-        public import Glibc
-        public import CLinuxShim
+        internal import Glibc
     #elseif canImport(Musl)
-        public import Musl
+        internal import Musl
+    #endif
+
+    #if canImport(CLinuxShim)
+        internal import CLinuxShim
     #endif
 
     extension Kernel.IO.Uring.Completion.Queue {
@@ -92,9 +95,8 @@ public import Kernel_Primitives
         }
 
         /// Whether the operation was cancelled.
-        ///
         public var isCancelled: Bool {
-            res == -125  // ECANCELED
+            res == -Int32(ECANCELED)
         }
 
         /// The error number (for failed operations).

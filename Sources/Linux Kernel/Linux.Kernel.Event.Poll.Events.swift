@@ -14,9 +14,12 @@ public import Kernel_Primitives
 
     #if canImport(Glibc)
         internal import Glibc
-        internal import CLinuxShim
     #elseif canImport(Musl)
         internal import Musl
+    #endif
+
+    #if canImport(CLinuxShim)
+        internal import CLinuxShim
     #endif
 
     extension Kernel.Event.Poll {
@@ -52,7 +55,7 @@ public import Kernel_Primitives
         ///
         /// - ``Kernel/Event/Poll``
         /// - ``Kernel/Event/Poll/Operation``
-        public struct Events: Sendable, Equatable, Hashable {
+        public struct Events: OptionSet, Sendable, Hashable {
             public let rawValue: UInt32
 
             public init(rawValue: UInt32) {
@@ -126,20 +129,6 @@ public import Kernel_Primitives
         ///
         /// - Linux: `EPOLLONESHOT`
         public static let oneshot = Self(rawValue: EPOLLONESHOT.rawValue)
-    }
-
-    // MARK: - Combining
-
-    extension Kernel.Event.Poll.Events {
-        /// Combines multiple event flags.
-        public static func | (lhs: Self, rhs: Self) -> Self {
-            Self(rawValue: lhs.rawValue | rhs.rawValue)
-        }
-
-        /// Checks if this contains another event flag.
-        public func contains(_ other: Self) -> Bool {
-            (rawValue & other.rawValue) == other.rawValue
-        }
     }
 
 #endif

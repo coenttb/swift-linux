@@ -14,9 +14,12 @@ public import Kernel_Primitives
 
     #if canImport(Glibc)
         internal import Glibc
-        internal import CLinuxShim
     #elseif canImport(Musl)
         internal import Musl
+    #endif
+
+    #if canImport(CLinuxShim)
+        internal import CLinuxShim
     #endif
 
     extension Kernel.Event.Poll.Create {
@@ -39,7 +42,7 @@ public import Kernel_Primitives
         ///
         /// - ``Kernel/Event/Poll``
         /// - ``Kernel/Event/Poll/Operation``
-        public struct Flags: Sendable, Equatable, Hashable {
+        public struct Flags: OptionSet, Sendable, Hashable {
             public let rawValue: Int32
 
             public init(rawValue: Int32) {
@@ -59,11 +62,6 @@ public import Kernel_Primitives
         ///
         /// - Linux: `EPOLL_CLOEXEC`
         public static let cloexec = Self(rawValue: Int32(EPOLL_CLOEXEC))
-
-        /// Combines multiple flags.
-        public static func | (lhs: Self, rhs: Self) -> Self {
-            Self(rawValue: lhs.rawValue | rhs.rawValue)
-        }
     }
 
 #endif
