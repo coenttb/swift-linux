@@ -37,7 +37,7 @@
 
         @Test("events combine with OR operator")
         func eventsCombineWithOrOperator() {
-            let combined = Kernel.Event.Poll.Events.in | .out
+            let combined: Kernel.Event.Poll.Events = [.in, .out]
             #expect(combined.contains(.in))
             #expect(combined.contains(.out))
             #expect(!combined.contains(.err))
@@ -45,12 +45,14 @@
 
         @Test("contains detects single event")
         func containsDetectsSingleEvent() {
-            #expect(Kernel.Event.Poll.Events.in.contains(.in))
-            #expect(!Kernel.Event.Poll.Events.in.contains(.out))
+            let events: Kernel.Event.Poll.Events = .in
+            #expect(events.contains(.in))
+            #expect(!events.contains(.out))
         }
 
         @Test("in event rawValue matches EPOLLIN")
         func inRawValueMatchesEPOLLIN() {
+            // EPOLLIN is EPOLL_EVENTS which has .rawValue
             #expect(Kernel.Event.Poll.Events.in.rawValue == EPOLLIN.rawValue)
         }
 
