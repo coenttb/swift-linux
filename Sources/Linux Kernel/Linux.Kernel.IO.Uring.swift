@@ -53,6 +53,16 @@ public import Kernel_Primitives
         ///   - params: Parameters struct (modified on return with ring offsets).
         /// - Returns: File descriptor for the io_uring instance.
         /// - Throws: `Error.setup` if creation fails.
+        ///
+        /// ## Blocking Behavior
+        ///
+        /// This method performs a blocking syscall. Call from a blocking context
+        /// (dedicated thread pool), not the Swift cooperative thread pool.
+        ///
+        /// ## Cancellation
+        ///
+        /// Not cancellable once the syscall begins. Check task cancellation
+        /// before calling if cooperative cancellation is needed.
         public static func setup(
             entries: UInt32,
             params: inout Params
@@ -76,6 +86,17 @@ public import Kernel_Primitives
         ///   - flags: Enter flags.
         /// - Returns: Number of SQEs submitted.
         /// - Throws: `Error.enter` on failure, `Error.interrupted` on EINTR.
+        ///
+        /// ## Blocking Behavior
+        ///
+        /// May block if `minComplete > 0` or if `.getEvents` flag is set.
+        /// Call from a blocking context (dedicated thread pool), not the
+        /// Swift cooperative thread pool.
+        ///
+        /// ## Cancellation
+        ///
+        /// If interrupted by a signal, throws `Error.interrupted`. Callers
+        /// should typically retry on interruption unless cancellation is desired.
         public static func enter(
             _ fd: Kernel.Descriptor,
             toSubmit: UInt32,
@@ -106,6 +127,16 @@ public import Kernel_Primitives
         ///   - argument: Pointer to the arguments for the operation.
         ///   - count: Number of arguments.
         /// - Throws: `Error.register` on failure.
+        ///
+        /// ## Blocking Behavior
+        ///
+        /// This method performs a blocking syscall. Call from a blocking context
+        /// (dedicated thread pool), not the Swift cooperative thread pool.
+        ///
+        /// ## Cancellation
+        ///
+        /// Not cancellable once the syscall begins. Check task cancellation
+        /// before calling if cooperative cancellation is needed.
         public static func register(
             _ fd: Kernel.Descriptor,
             opcode: Register.Opcode,
@@ -128,6 +159,16 @@ public import Kernel_Primitives
         /// Uses `Kernel.Close.close()` for consistency. Ignores errors.
         ///
         /// - Parameter fd: The io_uring file descriptor to close.
+        ///
+        /// ## Blocking Behavior
+        ///
+        /// This method performs a blocking syscall but typically completes quickly.
+        ///
+        /// ## Shutdown
+        ///
+        /// Closing the ring immediately invalidates all pending submissions and
+        /// completions. Ensure all in-flight operations are completed or cancelled
+        /// before closing.
         public static func close(_ fd: Kernel.Descriptor) {
             try? Kernel.Close.close(fd)
         }

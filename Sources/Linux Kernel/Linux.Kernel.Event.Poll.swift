@@ -41,6 +41,16 @@ public import Kernel_Primitives
         /// - Parameter flags: Flags for the new epoll instance.
         /// - Returns: A file descriptor for the new epoll instance.
         /// - Throws: `Error.create` if creation fails.
+        ///
+        /// ## Blocking Behavior
+        ///
+        /// This method performs a blocking syscall but typically completes quickly.
+        /// Safe to call from most contexts.
+        ///
+        /// ## Cancellation
+        ///
+        /// Not cancellable once the syscall begins. Check task cancellation
+        /// before calling if cooperative cancellation is needed.
         public static func create(flags: Create.Flags = .cloexec) throws(Error) -> Kernel.Descriptor {
             let epfd = epoll_create1(flags.rawValue)
             guard epfd >= 0 else {
@@ -57,6 +67,16 @@ public import Kernel_Primitives
         ///   - fd: The target file descriptor.
         ///   - event: The event structure (required for add/modify, ignored for delete).
         /// - Throws: `Error.ctl` if the operation fails.
+        ///
+        /// ## Blocking Behavior
+        ///
+        /// This method performs a blocking syscall but typically completes quickly.
+        /// Safe to call from most contexts.
+        ///
+        /// ## Cancellation
+        ///
+        /// Not cancellable once the syscall begins. Check task cancellation
+        /// before calling if cooperative cancellation is needed.
         public static func ctl(
             _ epfd: Kernel.Descriptor,
             op: Operation,
@@ -84,6 +104,17 @@ public import Kernel_Primitives
         ///   - timeout: Timeout in milliseconds (-1 for infinite, 0 for immediate).
         /// - Returns: Number of events written to buffer, or 0 on timeout.
         /// - Throws: `Error.wait` on failure, `Error.interrupted` on EINTR.
+        ///
+        /// ## Blocking Behavior
+        ///
+        /// Blocks until events are available, timeout expires, or interrupted by signal.
+        /// Call from a blocking context (dedicated thread pool), not the Swift
+        /// cooperative thread pool.
+        ///
+        /// ## Cancellation
+        ///
+        /// If interrupted by a signal, throws `Error.interrupted`. Callers
+        /// should typically retry on interruption unless cancellation is desired.
         internal static func wait(
             _ epfd: Kernel.Descriptor,
             events: inout [Event],
@@ -125,6 +156,17 @@ public import Kernel_Primitives
         ///   - timeout: Timeout duration, or `nil` for infinite.
         /// - Returns: Number of events written to buffer, or 0 on timeout.
         /// - Throws: `Error.wait` on failure, `Error.interrupted` on EINTR.
+        ///
+        /// ## Blocking Behavior
+        ///
+        /// Blocks until events are available, timeout expires, or interrupted by signal.
+        /// Call from a blocking context (dedicated thread pool), not the Swift
+        /// cooperative thread pool.
+        ///
+        /// ## Cancellation
+        ///
+        /// If interrupted by a signal, throws `Error.interrupted`. Callers
+        /// should typically retry on interruption unless cancellation is desired.
         public static func wait(
             _ epfd: Kernel.Descriptor,
             events: inout [Event],
