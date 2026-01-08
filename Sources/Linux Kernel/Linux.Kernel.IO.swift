@@ -12,11 +12,7 @@ public import Kernel_Primitives
 
 #if canImport(Glibc) || canImport(Musl)
 
-    extension Kernel {
-        /// Namespace for I/O-related types.
-        ///
-        /// Contains Linux-specific I/O mechanisms including io_uring.
-        public enum IO {}
-    }
+    // Note: Kernel.IO is defined in swift-kernel-primitives.
+    // This file extends it to add Linux-specific types like Uring.
 
 #endif
