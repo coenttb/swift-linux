@@ -40,9 +40,9 @@
                     #expect(current.rawValue == UInt64.max)
                 }
 
-                @Test("Offset from UInt64")
-                func fromUInt64() {
-                    let offset = Kernel.IOUring.Offset(4096)
+                @Test("Offset from File.Offset")
+                func fromFileOffset() {
+                    let offset = Kernel.IOUring.Offset(Kernel.File.Offset(4096))
                     #expect(offset == 4096)
                 }
 
@@ -60,7 +60,7 @@
 
                 @Test("numeric offset description")
                 func numericDescription() {
-                    let offset = Kernel.IOUring.Offset(4096)
+                    let offset = Kernel.IOUring.Offset(Kernel.File.Offset(4096))
                     #expect(offset.description == "4096")
                 }
 
@@ -72,9 +72,9 @@
 
                 @Test("Offset is Equatable")
                 func isEquatable() {
-                    let a = Kernel.IOUring.Offset(100)
-                    let b = Kernel.IOUring.Offset(100)
-                    let c = Kernel.IOUring.Offset(200)
+                    let a = Kernel.IOUring.Offset(Kernel.File.Offset(100))
+                    let b = Kernel.IOUring.Offset(Kernel.File.Offset(100))
+                    let c = Kernel.IOUring.Offset(Kernel.File.Offset(200))
                     #expect(a == b)
                     #expect(a != c)
                 }
@@ -84,7 +84,7 @@
                     var set = Set<Kernel.IOUring.Offset>()
                     set.insert(.zero)
                     set.insert(.current)
-                    set.insert(Kernel.IOUring.Offset(100))
+                    set.insert(Kernel.IOUring.Offset(Kernel.File.Offset(100)))
                     set.insert(.zero)  // duplicate
                     #expect(set.count == 3)
                 }
